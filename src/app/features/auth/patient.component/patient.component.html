@@ -1,0 +1,117 @@
+<div class="container">
+
+  <!-- Barra superior con título y botón -->
+  <div class="top-bar">
+    <h2>Pacientes</h2>
+
+    <button
+      class="btn-primary"
+      (click)="createNewPatient()"
+      [disabled]="loading"
+    >
+      + Crear paciente
+    </button>
+  </div>
+
+  <!-- Formulario sencillo -->
+  <div class="form-row">
+    <div class="form-field">
+      <label for="userInfoId">ID usuario</label>
+      <input
+        id="userInfoId"
+        type="text"
+        [(ngModel)]="selectedUserInfoId"
+        name="userInfoId"
+        placeholder="Ingrese ID de usuario"
+      />
+    </div>
+
+    <div class="form-field">
+      <label for="bloodType">Tipo de sangre</label>
+      <select
+        id="bloodType"
+        [(ngModel)]="selectedBloodType"
+        name="bloodType"
+      >
+        <option value="">Seleccione...</option>
+        <option value="A+">A+</option>
+        <option value="A-">A-</option>
+        <option value="B+">B+</option>
+        <option value="B-">B-</option>
+        <option value="AB+">AB+</option>
+        <option value="AB-">AB-</option>
+        <option value="O+">O+</option>
+        <option value="O-">O-</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Mensajes -->
+  <div *ngIf="loading" class="status loading">
+    Cargando pacientes...
+  </div>
+
+  <div *ngIf="errorMsg" class="status error">
+    {{ errorMsg }}
+  </div>
+
+  <!-- Tabla -->
+  <table class="patients-table" *ngIf="!loading && !errorMsg && patients.length">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Blood Type</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of patients">
+        <td>{{ p.id_patient }}</td>
+        <td>{{ p.blood_type }}</td>
+        <td>
+        <input
+          [(ngModel)]="p.blood_type"
+          name="blood-{{ p.id_patient }}"
+          class="blood-input"
+        />
+      </td>
+
+      <td>
+        <button
+          class="icon-button"
+          (click)="updatePatient(p)"
+          [disabled]="loading"
+          title="Actualizar paciente"
+        >
+          ✏️
+        </button>
+         <button
+          class="icon-button danger"
+          (click)="onDeletePatient(p)"
+          [disabled]="loading"
+          title="Eliminar paciente"
+        >
+          🗑️
+        </button>
+      </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && !errorMsg && !patients.length">
+    No se encontraron pacientes.
+  </div>
+
+  <!-- PAGINACIÓN -->
+  <div class="pagination" *ngIf="!loading && !errorMsg && patients.length">
+    <button (click)="prevPage()" [disabled]="currentPage === 1">
+      ‹ Anterior
+    </button>
+
+    <span>Página {{ currentPage }}</span>
+
+    <button (click)="nextPage()" [disabled]="!hasMore">
+      Siguiente ›
+    </button>
+  </div>
+
+</div>
