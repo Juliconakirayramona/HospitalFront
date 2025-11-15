@@ -1,0 +1,89 @@
+<div class="container">
+
+    <!-- Barra superior -->
+    <div class="top-bar">
+        <h2>Medicos</h2>
+
+        <button class="btn-primary" (click)="createNewMedic()" [disabled]="loading">
+            + Crear medico
+        </button>
+    </div>
+
+    <!-- Formulario -->
+    <div class="form-row">
+        <div class="form-field">
+            <label for="userInfoId">ID usuario</label>
+            <input id="userInfoId" type="text" [(ngModel)]="selectedUserInfoId" name="userInfoId"
+                placeholder="Ingrese ID de usuario" />
+        </div>
+
+        <div class="form-field">
+            <label for="specialty">Especialidad</label>
+            <input id="specialty" type="text" [(ngModel)]="selectedSpecialty" name="specialty"
+                placeholder="Ingrese la especialidad" />
+        </div>
+    </div>
+
+    <!-- Mensajes -->
+    <div *ngIf="loading" class="status loading">
+        Cargando Medicos...
+    </div>
+
+    <div *ngIf="errorMsg" class="status error">
+        {{ errorMsg }}
+    </div>
+
+    <!-- Tabla -->
+    <table class="medics-table" *ngIf="!loading && !errorMsg && medics.length">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Specialty</th>
+                <th>Editar</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let m of medics">
+                <td>{{ m.id_medic }}</td>
+                <td>{{ m.specialty }}</td>
+
+                <!-- Campo editable -->
+                <td>
+                    <input [(ngModel)]="m.specialty" name="specialty-{{ m.id_medic }}" class="specialty-input" />
+                </td>
+
+                <!-- Botones -->
+                <td>
+                    <button class="icon-button" (click)="updateMedic(m)" [disabled]="loading" title="Actualizar medico">
+                        ✏️
+                    </button>
+
+                    <button class="icon-button danger" (click)="onDeleteMedic(m)" [disabled]="loading"
+                        title="Eliminar medico">
+                        🗑️
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div *ngIf="!loading && !errorMsg && !medics.length">
+        No se encontraron medicos.
+    </div>
+
+    <!-- PAGINACIÓN -->
+    <div class="pagination" *ngIf="!loading && !errorMsg && medics.length">
+        <button (click)="prevPage()" [disabled]="currentPage === 1">
+            ‹ Anterior
+        </button>
+
+        <span>Página {{ currentPage }}</span>
+
+        <button (click)="nextPage()" [disabled]="!hasMore">
+            Siguiente ›
+        </button>
+    </div>
+
+</div>

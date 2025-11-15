@@ -2,8 +2,8 @@ import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth-guard';
 
 export const routes: Routes = [
- 
-   {
+
+  {
     path: 'login',
     loadComponent: () =>
       import('./features/auth/components/login-form/login-form')
@@ -23,9 +23,15 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/auth/patient.component/patient.component')
         .then(m => m.PatientComponent),
-        canActivate: [authGuard],
+    canActivate: [authGuard],
   },
-
+  {
+    path: 'medicos',
+    loadComponent: () =>
+      import('./features/auth/medic.component/medic.component')
+        .then(m => m.MedicComponent),
+    canActivate: [authGuard],
+  },
   // cualquier ruta rara → login
   {
     path: '**',

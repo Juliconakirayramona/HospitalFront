@@ -1,6 +1,6 @@
 /* Contenedor centrado */
 .login-container {
-  height: 100vh;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -89,6 +89,7 @@
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
   }
