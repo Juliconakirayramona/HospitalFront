@@ -52,4 +52,12 @@ export const routes: Routes = [
     path: '**',
     redirectTo: 'login',
   },
+
+   {
+    path: 'enfermeras',
+    loadComponent: () =>
+      import('./features/auth/nuser.component/nuser.component')
+        .then(m => m.NuserComponent),
+        // canActivate: [authGuard],
+  },
 ];
