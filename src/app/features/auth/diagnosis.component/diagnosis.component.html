@@ -1,0 +1,114 @@
+<div class="container">
+
+  <!-- Barra superior con título y botón -->
+  <div class="top-bar">
+    <h2>Diagnósticos</h2>
+
+    <button
+      class="btn-primary"
+      (click)="createNewDiagnosis()"
+      [disabled]="loading"
+    >
+      + Crear diagnóstico
+    </button>
+  </div>
+
+  <!-- Formulario sencillo -->
+  <div class="form-row">
+    <div class="form-field">
+      <label for="userInfoId">Descripción</label>
+      <input
+        id="userInfoId"
+        type="text"
+        [(ngModel)]="selecteddiagnosis_description"
+        name="userInfoId"
+        placeholder="Descripción de Diagnóstico"
+      />
+    </div>
+
+    <div class="form-field">
+      <label for="bloodType">Fecha de Diagnóstico</label>
+       <input
+        id="userInfoId"
+        type="text"
+        [(ngModel)]="selecteddiagnosis_date"
+        name="userInfoId"
+        placeholder="Fecha de Diagnóstico"
+      />
+    </div>
+  </div>
+
+  <!-- Mensajes -->
+  <div *ngIf="loading" class="status loading">
+    Cargando Diagnósticos...
+  </div>
+
+  <div *ngIf="errorMsg" class="status error">
+    {{ errorMsg }}
+  </div>
+
+  <!-- Tabla -->
+  <table class="patients-table" *ngIf="!loading && !errorMsg && diagnosis.length">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Fecha de Diagnósticos</th>
+        <th>Descripción de Diagnósticos</th>
+        <th>Editar Diagnóstico</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let d of diagnosis">
+        <td>{{ d.id_diagnosis }}</td>
+        <td>{{ d.diagnosis_date }}</td>
+        <td>{{ d.diagnosis_description }}</td>
+        
+        <td>
+        <input
+          [(ngModel)]="d.diagnosis_description"
+          name="blood-{{ d.id_diagnosis }}"
+          class="blood-input"
+        />
+      </td>
+
+      <td>
+        <button
+          class="icon-button"
+          (click)="updateDiagnosis(d)"
+          [disabled]="loading"
+          title="Actualizar diagnóstico"
+        >
+          ✏️
+        </button>
+         <button
+          class="icon-button danger"
+          (click)="onDeleteDiagnosis(d)"
+          [disabled]="loading"
+          title="Eliminar diagnóstico"
+        >
+          🗑️
+        </button>
+      </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && !errorMsg && !diagnosis.length">
+    No se encontraron Diagnósticos.
+  </div>
+
+  <!-- PAGINACIÓN -->
+  <div class="pagination" *ngIf="!loading && !errorMsg && diagnosis.length">
+    <button (click)="prevPage()" [disabled]="currentPage === 1">
+      ‹ Anterior
+    </button>
+
+    <span>Página {{ currentPage }}</span>
+
+    <button (click)="nextPage()" [disabled]="!hasMore">
+      Siguiente ›
+    </button>
+  </div>
+
+</div>

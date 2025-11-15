@@ -47,17 +47,17 @@ export const routes: Routes = [
         .then(m => m.MedicalAppointmentComponent),
     canActivate: [authGuard],
   },
+   {
+    path: 'diagnosticos',
+    loadComponent: () =>
+      import('./features/auth/diagnosis.component/diagnosis.component')
+        .then(m => m.DiagnosisComponent),
+    canActivate: [authGuard],
+  },
   // cualquier ruta rara → login
   {
     path: '**',
     redirectTo: 'login',
   },
 
-   {
-    path: 'enfermeras',
-    loadComponent: () =>
-      import('./features/auth/nuser.component/nuser.component')
-        .then(m => m.NuserComponent),
-        // canActivate: [authGuard],
-  },
 ];
