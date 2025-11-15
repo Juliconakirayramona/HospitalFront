@@ -8,9 +8,8 @@ export interface Patient {
   id_patient: number;          
   blood_type: string;
   id_user_information: string;
-
-  
 }
+
 @Component({
   selector: 'app-patient.component',
   imports: [CommonModule, FormsModule],
@@ -21,7 +20,7 @@ export class PatientComponent implements OnInit  {
   patients: Patient[] = [];
   loading = false;
   errorMsg = '';
-  pageSize = 10;        
+  pageSize = 12312;        
   currentPage = 1;      
   hasMore = true;       
 
@@ -38,25 +37,20 @@ export class PatientComponent implements OnInit  {
       this.errorMsg = 'Debes seleccionar el usuario y el tipo de sangre.';
       return;
     }
-
     const body = {
       id_user_information: this.selectedUserInfoId,
       blood_type: this.selectedBloodType
     };
-
     this.loading = true;
     this.errorMsg = '';
-
     this.patientService.createPatient(body).subscribe({
       next: (res) => {
         console.log('Paciente creado:', res);
         this.loading = false;
-
         // limpiar “formulario” (si aplica)
         this.selectedUserInfoId = '';
         this.selectedBloodType = '';
         this.errorMsg = '';
-
         // recargar tabla
         this.loadPatients(this.currentPage);
       },
@@ -121,7 +115,7 @@ export class PatientComponent implements OnInit  {
       },
     });
   }
-  
+
    onDeletePatient(p: Patient) {
     if (!p.id_patient) {
       this.errorMsg = 'El paciente no tiene un ID válido.';

@@ -1,0 +1,113 @@
+
+<div class="container">
+
+  <!-- Barra superior con título y botón -->
+  <div class="top-bar">
+    <h2>Enfermeras</h2>
+
+    <button
+    class="btn-primary"
+    (click)="createNewPatient()"
+    [disabled]="loading"
+  >
+    + Crear enfermera
+  </button>
+  </div>
+
+  <!-- Formulario sencillo -->
+  <div class="form-row">
+    <div class="form-field">
+      <label for="userInfoId">Especialidad</label>
+      <input
+        id="userInfoId"
+        type="text"
+        [(ngModel)]="selectedSpeciality"
+        name="userInfoId"
+        placeholder="Ingrese especialidad"
+      />
+    </div>
+
+    <div class="form-field">
+      <label for="speciality">ID usuario</label>
+      <input
+        id="speciality"
+        type="text"
+        [(ngModel)]="selectedUserInfoId"
+        name="speciality"
+        placeholder="Ingrese ID de usuario"
+      />
+    </div>
+  </div>
+
+  <!-- Mensajes -->
+  <div *ngIf="loading" class="status loading">
+    Cargando enfermeras...
+  </div>
+
+  <div *ngIf="errorMsg" class="status error">
+    {{ errorMsg }}
+  </div>
+
+  <!-- Tabla -->
+  <table class="patients-table" *ngIf="!loading && !errorMsg && nurses.length">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Specialty</th>
+        <th>User Information ID</th>
+        <th>Ingresar nueva especialidad</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let n of nurses">
+        <td>{{ n.id_nurse }}</td>
+        <td>{{ n.speciality }}</td>
+        <td>{{ n.id_user_information }}</td>
+        <input
+        [(ngModel)]="n.speciality"
+          name="speciality-{{ n.speciality }}"
+          class="blood-input"
+        />
+       
+      <td>
+         <button
+          class="icon-button"
+          (click)="updateNurse(n)"
+          [disabled]="loading"
+          title="Actualizar Enfermera"
+        >
+          ✏️
+        </button>
+          <button
+          class="icon-button danger"
+          (click)="onDeleteNurse(n)"
+          [disabled]="loading"
+          title="Eliminar enfermera"
+        >
+          🗑️
+        </button>
+       
+      </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && !errorMsg && !nurses.length">
+    No se encontraron enfermeras.
+  </div>
+
+  <!-- PAGINACIÓN -->
+  <div class="pagination" *ngIf="!loading && !errorMsg && nurses.length">
+    <button (click)="prevPage()" [disabled]="currentPage === 1">
+      ‹ Anterior
+    </button>
+
+    <span>Página {{ currentPage }}</span>
+
+    <button (click)="nextPage()" [disabled]="!hasMore">
+      Siguiente ›
+    </button>
+  </div>
+
+</div>

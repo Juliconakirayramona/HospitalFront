@@ -2,17 +2,18 @@ import { RouterLink } from '@angular/router';
 import { INavBarData } from './Helper'
 export const navBarData: INavBarData[] = [
     {
-        routerLink: 'dashboard',
+        routerLink: 'hfg',
         icon: 'fa fa-home',
         label: 'Dashboard'
     },
     {
+
         routerLink: 'medicos',
         icon: 'fas fa-user-md',
         label: 'Medics'
     },
     {
-        routerLink: '',
+        routerLink: 'enfermeras',
         icon: 'fas fa-user-nurse',
         label: 'Nurses'
     },
@@ -20,6 +21,11 @@ export const navBarData: INavBarData[] = [
         routerLink: 'pacientes',
         icon: 'fa fa-heartbeat',
         label: 'Patiens'
+    },
+    {
+        routerLink: 'aaaa',
+        icon: 'fa fa-heartbeat',
+        label: 'prueba'
     }
 
 

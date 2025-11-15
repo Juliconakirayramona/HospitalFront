@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { filter } from 'rxjs';
+import { filter, Subscription } from 'rxjs';
 import { Sidenav } from "./shared/components/sidenav/sidenav";
 import { CommonModule } from '@angular/common';
 import { Body } from "./shared/components/body/body";
@@ -24,16 +24,21 @@ export class App {
   islogin = false;
 
   constructor(private router: Router) { }
-
+  private routerSub!: Subscription;
   ngOnInit(): void {
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe((event: any) => {
-        this.updateLayout(event.urlAfterRedirects || event.url);
-      });
+  this.routerSub = this.router.events
+    .pipe(filter(event => event instanceof NavigationEnd))
+    .subscribe((event: any) => {
+      this.updateLayout(event.urlAfterRedirects || event.url);
+    });
 
-    // también al arrancar
-    this.updateLayout(this.router.url);
+  this.updateLayout(this.router.url);
+}
+
+ngOnDestroy(): void {
+  if (this.routerSub) {
+    this.routerSub.unsubscribe();
+  }
   }
 
   updateLayout(currentUrl: string) {
@@ -41,6 +46,7 @@ export class App {
 
     const token = localStorage.getItem('access_token');
     this.islogin = !!token;
+    console.log('updateLayout', currentUrl, 'token?', !!localStorage.getItem('access_token'));
 
     // Solo decide si muestra layout o no
     this.showLayout = this.islogin && currentUrl !== '/login';

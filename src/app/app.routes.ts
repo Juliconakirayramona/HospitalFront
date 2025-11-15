@@ -23,6 +23,7 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/auth/patient.component/patient.component')
         .then(m => m.PatientComponent),
+
     canActivate: [authGuard],
   },
   {
@@ -37,4 +38,13 @@ export const routes: Routes = [
     path: '**',
     redirectTo: 'login',
   },
+   {
+    path: 'enfermeras',
+    loadComponent: () =>
+      import('./features/auth/nuser.component/nuser.component')
+        .then(m => m.NuserComponent),
+        // canActivate: [authGuard],
+  },
+
+>>>>>>> 3b69ee5 (Enfermeras)
 ];
