@@ -1,1 +1,167 @@
-<p>medical-appointment.component works!</p>
+<div class="container">
+
+    <!-- Barra superior -->
+    <div class="top-bar">
+        <h2>Citas medicas</h2>
+
+        <button class="btn-primary" (click)="createNewMedicalAppointment()" [disabled]="loading">
+            + Crear nueva cita
+        </button>
+    </div>
+
+    <!-- Formulario -->
+    <div class="form-row">
+        <div class="form-field">
+            <label for="MedicId">ID medico</label>
+            <input id="MedicId" type="text" [(ngModel)]="selectedMedicId" name="MedicId"
+                placeholder="Ingrese ID del medico" />
+        </div>
+        <div class="form-field">
+            <label for="NurseId">ID enfermera</label>
+            <input id="NurseId" type="text" [(ngModel)]="selectedNurseId" name="NurseId"
+                placeholder="Ingrese ID de la enfermera" />
+        </div>
+        <div class="form-field">
+            <label for="PatientId">ID paciente</label>
+            <input id="PatientId" type="text" [(ngModel)]="selectedPatientId" name="PatientId"
+                placeholder="Ingrese ID del paciente" />
+        </div>
+        <div class="form-field">
+            <label for="DiagnosisId">ID diagnostico</label>
+            <input id="DiagnosisId" type="text" [(ngModel)]="selectedDiagnosisId" name="DiagnosisId"
+                placeholder="Ingrese ID del diagnostico" />
+        </div>
+        <div class="form-field">
+            <label for="Location">Direccion de la cita</label>
+            <input id="Location" type="text" [(ngModel)]="selectedLocation" name="Location"
+                placeholder="Ingrese la direccion de la cita" />
+        </div>
+        <div class="form-field">
+            <label for="AppointmentDate">Dia de la cita</label>
+            <input id="AppointmentDate" type="date" [(ngModel)]="selectedAppointmentDate" name="AppointmentDate"
+                placeholder="Ingrese el dia de la cita" />
+        </div>
+        <div class="form-field">
+            <label for="AppointmentHour">Hora de la cita</label>
+            <input id="AppointmentHour" type="time" [(ngModel)]="selectedAppointmentHour" name="AppointmentHour"
+                placeholder="Ingrese la hora de la cita" />
+        </div>
+    </div>
+
+    <!-- Mensajes -->
+    <div *ngIf="loading" class="status loading">
+        Cargando Citas...
+    </div>
+
+    <div *ngIf="errorMsg" class="status error">
+        {{ errorMsg }}
+    </div>
+
+    <!-- Tabla -->
+    <table class="appointment-table" *ngIf="!loading && !errorMsg && medicalAppointments.length">
+        <thead>
+            <tr>
+                <th>ID cita</th>
+                <th>ID medico</th>
+                <th>ID enfermera</th>
+                <th>ID paciente</th>
+                <th>ID diagnostico</th>
+                <th>Direccion de la cita</th>
+                <th>Dia de la cita</th>
+                <th>Hora de la cita</th>
+                <th>Acciones</th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+            <ng-container *ngFor="let m of medicalAppointments">
+
+                <!-- 🔹 Fila normal con información -->
+                <tr>
+                    <td>{{ m.id_medical_appointment }}</td>
+                    <td>{{ m.id_medic }}</td>
+                    <td>{{ m.id_nurse }}</td>
+                    <td>{{ m.id_patient }}</td>
+                    <td>{{ m.id_diagnosis }}</td>
+                    <td>{{ m.location }}</td>
+                    <td>{{ m.appointment_date }}</td>
+                    <td>{{ m.appointment_hour }}</td>
+                </tr>
+
+                <!-- 🔹 Fila editable -->
+                <tr class="edit-row">
+                    <td></td>
+
+                    <td>
+                        <input [(ngModel)]="m.id_medic" name="medic-{{ m.id_medical_appointment }}"
+                            class="data-input" />
+                    </td>
+
+                    <td>
+                        <input [(ngModel)]="m.id_nurse" name="nurse-{{ m.id_medical_appointment }}"
+                            class="data-input" />
+                    </td>
+
+                    <td>
+                        <input [(ngModel)]="m.id_patient" name="patient-{{ m.id_medical_appointment }}"
+                            class="data-input" />
+                    </td>
+
+                    <td>
+                        <input [(ngModel)]="m.id_diagnosis" name="diagnosis-{{ m.id_medical_appointment }}"
+                            class="data-input" />
+                    </td>
+
+                    <td>
+                        <input [(ngModel)]="m.location" name="location-{{ m.id_medical_appointment }}"
+                            class="data-input" />
+                    </td>
+
+                    <td>
+                        <input [(ngModel)]="m.appointment_date" name="appointmentDate-{{ m.id_medical_appointment }}"
+                            type="date" class="data-input" />
+                    </td>
+
+                    <td>
+                        <input [(ngModel)]="m.appointment_hour" name="appointmentHour-{{ m.id_medical_appointment }}"
+                            type="time" class="data-input" />
+                    </td>
+
+                    <!-- 🔹 Botones -->
+                    <td class="actions-cell">
+                        <button class="icon-button" (click)="updateMedicalAppointment(m)" [disabled]="loading"
+                            title="Actualizar cita médica">
+                            ✏️
+                        </button>
+
+                        <button class="icon-button danger" (click)="onDeleteMedicalAppointment(m)" [disabled]="loading"
+                            title="Eliminar cita médica">
+                            🗑️
+                        </button>
+                    </td>
+                </tr>
+
+            </ng-container>
+        </tbody>
+
+    </table>
+
+    <div *ngIf="!loading && !errorMsg && !medicalAppointments.length">
+        No se encontraron citas medicas.
+    </div>
+
+    <!-- PAGINACIÓN -->
+    <div class="pagination" *ngIf="!loading && !errorMsg && medicalAppointments.length">
+        <button (click)="prevPage()" [disabled]="currentPage === 1">
+            ‹ Anterior
+        </button>
+
+        <span>Página {{ currentPage }}</span>
+
+        <button (click)="nextPage()" [disabled]="!hasMore">
+            Siguiente ›
+        </button>
+    </div>
+
+</div>

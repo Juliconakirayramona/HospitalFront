@@ -33,18 +33,23 @@ export const routes: Routes = [
         .then(m => m.MedicComponent),
     canActivate: [authGuard],
   },
+  {
+    path: 'enfermeras',
+    loadComponent: () =>
+      import('./features/auth/nuser.component/nuser.component')
+        .then(m => m.NuserComponent),
+    canActivate: [authGuard],
+  },
+  {
+    path: 'citas',
+    loadComponent: () =>
+      import('./features/auth/medical-appointment.component/medical-appointment.component')
+        .then(m => m.MedicalAppointmentComponent),
+    canActivate: [authGuard],
+  },
   // cualquier ruta rara → login
   {
     path: '**',
     redirectTo: 'login',
   },
-   {
-    path: 'enfermeras',
-    loadComponent: () =>
-      import('./features/auth/nuser.component/nuser.component')
-        .then(m => m.NuserComponent),
-        // canActivate: [authGuard],
-  },
-
->>>>>>> 3b69ee5 (Enfermeras)
 ];

@@ -10,10 +10,11 @@ export interface Medic {
 }
 @Component({
   selector: 'app-medic.component',
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './medic.component.html',
   styleUrl: './medic.component.scss',
 })
+
 export class MedicComponent {
   medics: Medic[] = [];
   loading = false;

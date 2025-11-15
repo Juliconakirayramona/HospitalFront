@@ -23,15 +23,8 @@ export const navBarData: INavBarData[] = [
         label: 'Patiens'
     },
     {
-        routerLink: 'aaaa',
-        icon: 'fa fa-heartbeat',
-        label: 'prueba'
-    }
-
-
-
-
-
-
-
+        routerLink: 'citas',
+        icon: 'fas fa-calendar-check',
+        label: 'medical_appointment'
+    },
 ]
