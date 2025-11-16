@@ -28,6 +28,11 @@ export const navBarData: INavBarData[] = [
         label: 'Medical Appointments'
     },
     {
+        routerLink: 'facturas',
+        icon: 'fas fa-dollar-sign',
+        label: 'bills'
+    },
+    {
         routerLink: 'diagnosticos',
         icon: 'fas fa-notes-medical',
         label: 'Diagnosis'

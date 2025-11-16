@@ -1,0 +1,123 @@
+<div class="container">
+
+    <!-- Barra superior -->
+    <div class="top-bar">
+        <h2>Facturas</h2>
+
+        <button class="btn-primary" (click)="createNewBill()" [disabled]="loading">
+            + Crear nueva factura
+        </button>
+    </div>
+
+    <!-- Formulario -->
+    <div class="form-row">
+        <div class="form-field">
+            <label for="PatientId">ID paciente</label>
+            <input id="PatientId" type="text" [(ngModel)]="selectedPatientId" name="PatientId"
+                placeholder="Ingrese ID del paciente" />
+        </div>
+        <div class="form-field">
+            <label for="AppointmentId">ID cita</label>
+            <input id="AppointmentId" type="text" [(ngModel)]="selectedMedicalAppointmentId" name="AppointmentId"
+                placeholder="Ingrese ID de la cita" />
+        </div>
+        <div class="form-field">
+            <label for="Total">Total</label>
+            <input id="Total" type="number" [(ngModel)]="selectedTotal" name="Total" placeholder="Ingrese Total" />
+        </div>
+        <div class="form-field">
+            <label for="GenerationHour">Hora de generacion</label>
+            <input id="GenerationHour" type="time" [(ngModel)]="selectedGenerationHour" name="GenerationHour"
+                placeholder="Ingrese hora de generacion" />
+        </div>
+        <div class="form-field">
+            <label for="GenerationDate">fecha de generacion</label>
+            <input id="GenerationDate" type="date" [(ngModel)]="selectedGenerationDate" name="GenerationDate"
+                placeholder="Ingrese la fecha de generacion" />
+        </div>
+    </div>
+
+    <!-- Mensajes -->
+    <div *ngIf="loading" class="status loading">
+        Cargando Facturas...
+    </div>
+
+    <div *ngIf="errorMsg" class="status error">
+        {{ errorMsg }}
+    </div>
+
+    <!-- Tabla -->
+    <table class="bill-table" *ngIf="!loading && !errorMsg && bills.length">
+        <thead>
+            <tr>
+                <th>ID factura</th>
+                <th>ID paciente</th>
+                <th>ID cita</th>
+                <th>Total</th>
+                <th>Fecha de generacion</th>
+                <th>Hora de generacion</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <ng-container *ngFor="let b of bills">
+
+                <!-- 🔹 Fila normal con información -->
+                <tr>
+                    <td>{{ b.id_bill }}</td>
+                    <td>{{ b.id_patient }}</td>
+                    <td>{{ b.id_medical_appointment }}</td>
+                    <td>{{ b.total }}</td>
+                    <td>{{ b.generation_date }}</td>
+                    <td>{{ b.generation_hour }}</td>
+                </tr>
+
+                <!-- 🔹 Fila editable -->
+                <tr class="edit-row">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                    <td>
+                        <input [(ngModel)]="b.total" type="number" name="total-{{ b.id_bill }}" class="data-input" />
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <!-- 🔹 Botones -->
+                    <td class="actions-cell">
+                        <button class="icon-button" (click)="updateBill(b)" [disabled]="loading"
+                            title="Actualizar factura">
+                            ✏️
+                        </button>
+
+                        <button class="icon-button danger" (click)="onDeleteBill(b)" [disabled]="loading"
+                            title="Eliminar factura">
+                            🗑️
+                        </button>
+                    </td>
+                </tr>
+
+            </ng-container>
+        </tbody>
+
+    </table>
+
+    <div *ngIf="!loading && !errorMsg && !bills.length">
+        No se encontraron citas medicas.
+    </div>
+
+    <!-- PAGINACIÓN -->
+    <div class="pagination" *ngIf="!loading && !errorMsg && bills.length">
+        <button (click)="prevPage()" [disabled]="currentPage === 1">
+            ‹ Anterior
+        </button>
+
+        <span>Página {{ currentPage }}</span>
+
+        <button (click)="nextPage()" [disabled]="!hasMore">
+            Siguiente ›
+        </button>
+    </div>
+
+</div>
