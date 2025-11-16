@@ -12,7 +12,12 @@
       + Crear paciente
     </button>
   </div>
-
+<input 
+        type="text" 
+        placeholder="Buscar Pacientes.."
+        [(ngModel)]="searchText"
+        class="search-input"
+        />
   <!-- Formulario sencillo -->
   <div class="form-row">
     <div class="form-field">
@@ -64,7 +69,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let p of patients">
+      <tr *ngFor="let p of patients | filterDiagnosis: searchText: ['id_patient', 'blood_type']">
         <td>{{ p.id_patient }}</td>
         <td>{{ p.blood_type }}</td>
         <td>

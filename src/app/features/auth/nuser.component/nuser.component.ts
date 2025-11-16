@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NurseServices } from '../services/Nurse.Services';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FilterDiagnosisPipe } from "../../../shared/pipes/capitalize-pipe";
 
 export interface Nurses {
   id_nurse: string;          
@@ -11,7 +12,7 @@ export interface Nurses {
 
 @Component({
   selector: 'app-nuser.component',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, FilterDiagnosisPipe],
   templateUrl: './nuser.component.html',
   styleUrl: './nuser.component.scss',
 })
@@ -22,7 +23,7 @@ export class NuserComponent {
   pageSize = 0;        
   currentPage = 1;      
   hasMore = true;       
-
+  searchText: string = '';
   selectedUserInfoId = '';   
   selectedSpeciality = ''; 
 

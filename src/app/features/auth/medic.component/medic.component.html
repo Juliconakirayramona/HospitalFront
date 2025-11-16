@@ -7,8 +7,14 @@
         <button class="btn-primary" (click)="createNewMedic()" [disabled]="loading">
             + Crear medico
         </button>
+        
     </div>
-
+<input 
+        type="text" 
+        placeholder="Buscar Médicos.."
+        [(ngModel)]="searchText"
+        class="search-input"
+        />
     <!-- Formulario -->
     <div class="form-row">
         <div class="form-field">
@@ -45,7 +51,7 @@
         </thead>
 
         <tbody>
-            <tr *ngFor="let m of medics">
+            <tr *ngFor="let m of medics | filterDiagnosis: searchText: ['id_medic', 'specialty']">
                 <td>{{ m.id_medic }}</td>
                 <td>{{ m.specialty }}</td>
 

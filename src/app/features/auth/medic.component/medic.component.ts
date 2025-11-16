@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MedicService } from '../services/Medics.services';
 import { FormsModule } from '@angular/forms';
+import { FilterDiagnosisPipe } from "../../../shared/pipes/capitalize-pipe";
 
 export interface Medic {
   id_medic: string;
@@ -10,7 +11,7 @@ export interface Medic {
 }
 @Component({
   selector: 'app-medic.component',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, FilterDiagnosisPipe],
   templateUrl: './medic.component.html',
   styleUrl: './medic.component.scss',
 })
@@ -22,7 +23,7 @@ export class MedicComponent {
   pageSize = 10;
   currentPage = 1;
   hasMore = true;
-
+  searchText: string = '';
   selectedUserInfoId = '';
   selectedSpecialty = '';
 

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { DiagnosisService } from '../services/Diagnosis.Services';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FilterDiagnosisPipe } from "../../../shared/pipes/capitalize-pipe";
 
 export interface Diagnosis {
   id_diagnosis: string;
@@ -11,7 +12,7 @@ export interface Diagnosis {
 
 @Component({
   selector: 'app-diagnosis.component',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, FilterDiagnosisPipe],
   templateUrl: './diagnosis.component.html',
   styleUrl: './diagnosis.component.scss',
 })
@@ -22,7 +23,7 @@ export class DiagnosisComponent {
     pageSize = 12312;        
     currentPage = 1;      
     hasMore = true;       
-  
+     searchText: string = '';
     selecteddiagnosis_description = '';   
     selecteddiagnosis_date = ''; 
 

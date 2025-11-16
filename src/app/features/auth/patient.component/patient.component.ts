@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PatientService } from '../services/Patients.Services';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { FilterDiagnosisPipe } from "../../../shared/pipes/capitalize-pipe";
 
 
 export interface Patient {
@@ -12,7 +13,7 @@ export interface Patient {
 
 @Component({
   selector: 'app-patient.component',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, FilterDiagnosisPipe],
   templateUrl: './patient.component.html',
   styleUrl: './patient.component.scss',
 })
@@ -20,10 +21,10 @@ export class PatientComponent implements OnInit  {
   patients: Patient[] = [];
   loading = false;
   errorMsg = '';
-  pageSize = 12312;        
+  pageSize = 1;        
   currentPage = 1;      
   hasMore = true;       
-
+  searchText: string = '';
   selectedUserInfoId = '';   
   selectedBloodType = ''; 
   constructor (private patientService: PatientService) {}
@@ -98,7 +99,7 @@ export class PatientComponent implements OnInit  {
 
     this.patientService.getPatients(skip, limit).subscribe({
       next: (data: Patient[]) => {
-          this.patients = data || [];
+        this.patients = data || [];
         this.hasMore = this.patients.length === this.pageSize;
 
         console.log('Patients loaded', data);

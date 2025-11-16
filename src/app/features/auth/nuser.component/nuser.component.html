@@ -13,7 +13,12 @@
     + Crear enfermera
   </button>
   </div>
-
+<input 
+        type="text" 
+        placeholder="Buscar Enfermeras.."
+        [(ngModel)]="searchText"
+        class="search-input"
+        />
   <!-- Formulario sencillo -->
   <div class="form-row">
     <div class="form-field">
@@ -60,7 +65,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let n of nurses">
+      <tr *ngFor="let n of nurses | filterDiagnosis: searchText: ['id_nurse', 'speciality', 'id_user_information']">
         <td>{{ n.id_nurse }}</td>
         <td>{{ n.speciality }}</td>
         <td>{{ n.id_user_information }}</td>

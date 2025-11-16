@@ -27,7 +27,7 @@ private authService = inject(Auth);
       .subscribe({
         next: (res) => {
           console.log('LOGIN OK', res);
-          this.router.navigate(['/pacientes']);
+          this.router.navigate(['/dashboard']);
           // this.router.navigate(['/patients']); // o donde quieras redirigir
         },
         error: (err) => {

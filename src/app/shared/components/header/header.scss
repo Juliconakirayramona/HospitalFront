@@ -16,7 +16,7 @@
             padding: 0.813rem 1.563rem;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-end;
 
             .head-content-left {
                 .search-container{
@@ -318,4 +318,8 @@
     background-color: #bec2c4;
     background-size: 100%;
     transition: background 0s;
+}
+
+h4 {
+    text-align: left !important;
 }

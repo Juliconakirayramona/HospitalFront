@@ -46,22 +46,6 @@ export const notifications = [
 
 
 export const userItems = [
-    
-    {
-        id:'profile',
-        icon: 'far fa-user',
-        label: 'Profile'
-    },
-    {
-        id: 'settings',
-        icon: 'far fa-cog',
-        label: 'Settings'
-    },
-    {
-        id: 'lock',
-        icon: 'far fa-unlock-alt',
-        label: 'Lock screen'
-    },
     {
         id: 'logout',
         icon: 'far fa-power-off',

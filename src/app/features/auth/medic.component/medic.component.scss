@@ -213,3 +213,11 @@
 .icon-button.danger:hover:not(:disabled) {
     background: #fee2e2;
 }
+.search-input {
+  width: 250px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-bottom: 12px;
+  font-size: 14px;
+}

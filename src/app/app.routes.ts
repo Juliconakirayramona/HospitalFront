@@ -16,6 +16,13 @@ export const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full',
   },
+  {
+    path: 'dashboard',
+    loadComponent: () =>
+      import('../app/features/auth/components/dashboard/dashboard')
+        .then(m => m.Dashboard),
+    canActivate: [authGuard],
+  },
 
   // ejemplo: pacientes
   {

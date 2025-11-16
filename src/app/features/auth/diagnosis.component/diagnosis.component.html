@@ -12,6 +12,12 @@
       + Crear diagnóstico
     </button>
   </div>
+  <input 
+  type="text" 
+  placeholder="Buscar Diagnóstico.."
+  [(ngModel)]="searchText"
+  class="search-input"
+/>
 
   <!-- Formulario sencillo -->
   <div class="form-row">
@@ -59,7 +65,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let d of diagnosis">
+      <tr *ngFor="let d of diagnosis | filterDiagnosis: searchText">
         <td>{{ d.id_diagnosis }}</td>
         <td>{{ d.diagnosis_date }}</td>
         <td>{{ d.diagnosis_description }}</td>
