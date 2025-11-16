@@ -25,7 +25,12 @@ export const navBarData: INavBarData[] = [
     {
         routerLink: 'citas',
         icon: 'fas fa-calendar-check',
-        label: 'medical_appointment'
+        label: 'medical appointment'
+    },
+    {
+        routerLink: 'facturas',
+        icon: 'fas fa-dollar-sign',
+        label: 'bills'
     },
     {
         routerLink: 'diagnosticos',
